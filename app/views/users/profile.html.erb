@@ -1,36 +1,43 @@
-<h1>List of photos</h1>
+<h1><%= @current_user.username %> </h1>
 
-@public_user_ids
+<dl>
+  <dt>Private</dt>
+  <dd><%= @current_user.private %></dd>
+  <dt>Followers</dt>
+  <dd>
+    37
+      <div>
+          <a href="/delete_follow_request/1854">
+            Unfollow
+          </a>
+    </div>
+  </dd>
+  <dt>Following</dt>
+  <dd>something following</dd>
+</dl>
 
-<% if @current_user != nil %>
-  <form action="/insert_photo" method="post" enctype="multipart/form-data">
-    <label for="browser_input">Image</label>
-    <input id="browser_input" type="file" name="query_image" placeholder="Enter a URL for the image...">
-
-    <label for="browser_caption">Caption</label>
-    <textarea id="browser_caption" name="query_caption" placeholder="Enter a caption for the photo..."></textarea>
-
-    <button>Add photo</button>
-  </form>
-<% end %>
-
+<h1>Own photos (<%= @user_photos.count %>) </h1>
 <hr>
   <div>
     <div>
       <table border="1">
         <tr>
           <th>Image</th>
-          <th>Caption</th>
           <th>Owner</th>
+          <th>Caption</th>
           <th>Posted</th>
           <th>Likes</th>
           <th></th>
         </tr>
 
-        <% @feed.each do |a_photo| %>
+        <% @user_photos.each do |a_photo| %>
             <tr>
                 <td>
                   <img src="<%= a_photo.image %>">
+                </td>
+
+                <td>
+                  <%= a_photo.owner_id %>
                 </td>
               
                 <td>
@@ -38,12 +45,7 @@
                 </td>
               
                 <td>
-                  
-                  <%= a_photo.owner_id %>
-                </td>
-              
-                <td>
-                  <%= a_photo.created_at %>
+                  <%= a_photo.updated_at %>
                 </td>
               
                 <td>
