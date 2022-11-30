@@ -1,4 +1,15 @@
 <a href="/users">All users</a>
 <a href="/photos">All public photos</a>
-<a href="/user_sign_in">Sign in</a>
-<a href="/user_sign_up">Sign up</a>
+<p><%= notice %></p>
+<% if @current_user == nil %>
+  <a href="/user_sign_in">Sign in</a>
+  <a href="/user_sign_up">Sign up</a>
+<% else %>
+  <li>
+    <a href="/user_sign_out">Sign out</a>
+  </li>
+  <li>
+    <a href="/edit_user_profile">Edit user profile</a>
+  </li>
+<% end %>
+  
