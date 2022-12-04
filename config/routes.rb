@@ -10,7 +10,8 @@ Rails.application.routes.draw do
   get("/photos/:photo_id", { :controller => "photo", :action => "photo_page" })
   post("/insert_like/:photo_id", { :controller => "photo", :action => "insert_like" })
 
-
+  post("/follow", { :controller => "user", :action => "follow" })
+  post("/unfollow", { :controller => "user", :action => "unfollow" })
 
 
 

@@ -1,7 +1,7 @@
 class UserController < ApplicationController
   def index
+    @current_user = User.where( { :id => session[:user_id]}).at(0)
     matching_users = User.all
-
     @list_of_users = matching_users.order({ :username => :asc })
 
     render("users/index.html.erb")
@@ -17,5 +17,14 @@ class UserController < ApplicationController
     @user_photos = Photo.where({ :owner_id => @the_user.id}).order({ :created_at => :asc })
 
     render("users/profile.html.erb")
+  end
+
+
+  def follow
+
+  end
+
+  def unfollow
+
   end
 end

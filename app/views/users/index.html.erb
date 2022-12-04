@@ -33,10 +33,30 @@
 
 
           <% if @current_user != nil %>
-            <td>
-              Follow button
-            </td>
-          <% else %>
+            <% if FollowRequest.where({ :sender_id => @current_user.id, :recipient_id => a_user.id }).at(0) == nil %>
+              <td>
+                <form action="/follow" method="post">
+                  <input type="hidden" name="query_recipient_id" value="<%= a_user.id %>">
+                  <button>
+                    Follow
+                  </button>
+                </form>
+              </td>
+            <% elsif FollowRequest.where({ :sender_id => @current_user.id, :recipient_id => a_user.id}).at(0).status == "pending" %>
+              <td>
+                Request sent.
+                <a href="/unfollow">
+                  Cancel
+                </a>
+              </td>
+
+            <% elsif FollowRequest.where({ :sender_id => @current_user.id, :recipient_id => a_user.id}).at(0).status == "accepted" %>
+              <td>
+                <a href="/unfollow">
+                  Unfollow
+                </a>
+              </td>
+            <% end %>
           <% end %>
 
           <td>
