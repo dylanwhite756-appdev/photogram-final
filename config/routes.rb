@@ -3,10 +3,12 @@ Rails.application.routes.draw do
   get("/", { :controller => "application", :action => "index" })
   
   get("/users", { :controller => "user", :action => "index" })
-  get("/users/:user_id", { :controller => "user", :action => "profile" })
+  get("/users/:username", { :controller => "user", :action => "profile" })
 
 
   get("/photos", { :controller => "photo", :action => "index" })
+  get("/photos/:photo_id", { :controller => "photo", :action => "photo_page" })
+  post("/insert_like/:photo_id", { :controller => "photo", :action => "insert_like" })
 
 
 
@@ -20,7 +22,8 @@ Rails.application.routes.draw do
   post("/insert_user", { :controller => "user_authentication", :action => "create"  })
       
   # EDIT PROFILE FORM        
-  get("/edit_user_profile", { :controller => "user_authentication", :action => "edit_profile_form" })       
+  get("/edit_user_profile", { :controller => "user_authentication", :action => "edit_profile_form" })     
+    
   # UPDATE RECORD
   post("/modify_user", { :controller => "user_authentication", :action => "update" })
   

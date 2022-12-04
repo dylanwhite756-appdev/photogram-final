@@ -62,6 +62,7 @@ class UserAuthenticationController < ApplicationController
     @user.email = params.fetch("query_email")
     @user.password = params.fetch("query_password")
     @user.password_confirmation = params.fetch("query_password_confirmation")
+    @user.username = params.fetch("query_username")
     
     if @user.valid?
       @user.save

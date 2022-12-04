@@ -1,0 +1,110 @@
+<% if @current_user == nil %>
+  redirect_to("/user_sign_in", { :alert => "You have to sign in first." })
+<% end %>
+
+<p><%= notice %></p>
+
+<h1> Photo Details </h1>
+<dl>
+  <dt>Image</dt>
+  <dd>
+    <img src="<%= @photo_for_page.image %>">
+  </dd>
+
+  <dt>Caption</dt>
+  <dd>
+    <%= @photo_for_page.caption %>
+  </dd>
+
+  <dt>Owner</dt>
+  <dd>
+    <%= @photo_owner.username %>
+  </dd>
+
+  <dt>Posted</dt>
+  <dd>
+    <%= distance_of_time_in_words(Time.now, @photo_for_page.created_at) %> ago
+  </dd>
+
+  <dt>Likes count</dt>
+  <dd><%= @photo_for_page.likes_count %></dd>
+
+  <dt>Comments count</dt>
+  <dd><%= @photo_for_page.comments_count %></dd>
+
+  <dt>Fans</dt>
+  <dd>
+    jolie, ester, isidro, ester, nakita, ellen, sharilyn, jolie, and dominique
+  </dd>
+
+  <dt>Add a fan</dt>
+  <dd>
+
+    <form action="/insert_like/<%= params.fetch("photo_id") %>" method="post">
+      <input type="hidden">
+      <button>Like</button>
+    </form>
+  </dd>
+
+  <% if @photo_owner == @current_user %>
+    <dt>Edit photo</dt>
+    <dd>
+      <form action="/modify_photo/632" method="post" enctype="multipart/form-data">
+        <label for="browser_image">Image URL</label>
+        <input id="browser_image" type="file" name="query_image" placeholder="Enter a URL for the image..." value="https://robohash.org/ducimusaliquidet">
+      
+        <label for="browser_caption">Caption</label>
+        <textarea id="browser_caption" name="query_caption" placeholder="Enter a caption for the photo...">Winter is coming.</textarea>
+      
+        <button>Update photo</button>
+      </form>
+    </dd>
+
+    <dt>Delete photo</dt>
+    <dd>
+      <a href="/delete_photo/632">
+        Delete this photo
+      </a>
+    </dd>
+  <% end %>
+  </dl>
+
+<h2>Comments</h2>
+
+<table>
+  <tr>
+    <th>Commenter</th>
+    <th>Comment</th>
+    <th>Posted</th>
+  </tr>
+
+  <% @comments_for_photo.each do |comment| %>
+    <tr>
+      <td>
+        <%= User.where( { :id => comment.author_id}).at(0).username %>
+      </td>
+
+      <td>
+         <%= comment.body %>
+      </td>
+
+      <td>
+        <%= comment.updated_at %>
+      </td>
+    </tr>  
+  <% end %>
+</table>
+
+<h3>Add a new comment</h3>
+
+<form action="/insert_comment" method="post">
+  <input type="hidden" value="632" name="query_photo_id">
+  
+  <label for="browser_comment">Comment</label>
+  <textarea id="browser_comment" name="query_body" placeholder="Enter a comment..."></textarea>
+
+  <button>Add comment</button>
+</form>
+
+  </body>
+</html>

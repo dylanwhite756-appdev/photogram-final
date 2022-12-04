@@ -38,6 +38,8 @@ m = Module.new do
   end
 
   def gemfile
+    gem "carrierwave"
+    gem "cloudinary"
     gemfile = ENV["BUNDLE_GEMFILE"]
     return gemfile if gemfile && !gemfile.empty?
 

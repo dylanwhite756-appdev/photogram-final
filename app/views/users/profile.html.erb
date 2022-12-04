@@ -1,3 +1,4 @@
+
 <h1><%= @current_user.username %> </h1>
 
 <dl>
@@ -5,7 +6,17 @@
   <dd><%= @current_user.private %></dd>
   <dt>Followers</dt>
   <dd>
-    37
+    <%= @followers_count %>
+
+  <% if @current_user.username == params.fetch("username") %> 
+    <h4>Pending follow requests</h4>
+
+      <ul>
+        <% @pending_followers.each do |a_request| %>
+          <%= User.where({ :id => a_request.sender_id}).at(0).username %>    
+        <% end %>
+      </ul>
+  <% end %>
       <div>
           <a href="/delete_follow_request/1854">
             Unfollow
@@ -13,7 +24,22 @@
     </div>
   </dd>
   <dt>Following</dt>
-  <dd>something following</dd>
+  <dd><%= @following_count %></dd>
+
+<% if @current_user.username == params.fetch("username") %>
+  <dt>Edit user</dt>
+  <dd>
+    <form action="/modify_user/81" method="post">
+      <label for="browser_username">Username</label>
+      <input id="browser_username" type="text" name="query_username" placeholder="Enter a username..."
+        value="galen">
+
+      <label for="browser_private">Private?</label>
+      <input id="browser_private" type="checkbox" name="query_private" >
+
+      <button>Update user</button>
+    </form>
+<% end %>
 </dl>
 
 <h1>Own photos (<%= @user_photos.count %>) </h1>
@@ -45,7 +71,7 @@
                 </td>
               
                 <td>
-                  <%= a_photo.updated_at %>
+                  <%= distance_of_time_in_words(Time.now, a_photo.created_at) %> ago
                 </td>
               
                 <td>
@@ -53,7 +79,7 @@
                 </td>
               
                 <td>
-                  <a href="/photos/777">
+                  <a href="/photos/<%= a_photo.id %>">
                     Show details
                   </a>
                 </td>
