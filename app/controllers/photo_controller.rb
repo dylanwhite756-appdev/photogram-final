@@ -32,4 +32,22 @@ class PhotoController < ApplicationController
     redirect_to("/photos", { :notice => "Like created successfully." })
   end
 
+  def delete_like
+    @the_like = Like.where({ :fan_id => @current_user.id, :photo_id => params.fetch("photo_id") }).at(0)
+    @the_like.destroy
+
+
+    redirect_to("/photos", { :alert => "Like deleted successfully." })
+  end
+
+
+  def insert_comment
+      @new_comment = Comment.new
+      
+      @new_comment.author_id = @current_user.id
+      @new_comment.body = params.fetch("query_body")
+      @new_comment.photo_id = params.fetch("query_photo_id")
+
+      @new_comment.save
+  end
 end

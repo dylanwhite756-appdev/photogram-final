@@ -9,9 +9,12 @@ Rails.application.routes.draw do
   get("/photos", { :controller => "photo", :action => "index" })
   get("/photos/:photo_id", { :controller => "photo", :action => "photo_page" })
   post("/insert_like/:photo_id", { :controller => "photo", :action => "insert_like" })
+  get("/delete_like/:photo_id", { :controller => "photo", :action => "delete_like" })
 
   post("/follow", { :controller => "user", :action => "follow" })
   post("/unfollow", { :controller => "user", :action => "unfollow" })
+
+  post("/insert_comment", { :controller => "photo", :action => "insert_comment" })
 
 
 

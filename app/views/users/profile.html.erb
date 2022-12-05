@@ -17,11 +17,21 @@
         <% end %>
       </ul>
   <% end %>
+  <% if @current_user.username != params.fetch("username") %>
+    <% if FollowRequest.where %>
       <div>
           <a href="/delete_follow_request/1854">
             Unfollow
           </a>
-    </div>
+       </div>
+    <% else %>
+      <div>
+          <a href="/delete_follow_request/1854">
+            Unfollow
+          </a>
+       </div>
+    <% end %>
+  <% end %>
   </dd>
   <dt>Following</dt>
   <dd><%= @following_count %></dd>
@@ -32,7 +42,7 @@
     <form action="/modify_user/81" method="post">
       <label for="browser_username">Username</label>
       <input id="browser_username" type="text" name="query_username" placeholder="Enter a username..."
-        value="galen">
+        value="<%= @current_user.username %>">
 
       <label for="browser_private">Private?</label>
       <input id="browser_private" type="checkbox" name="query_private" >
