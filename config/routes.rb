@@ -4,12 +4,15 @@ Rails.application.routes.draw do
   
   get("/users", { :controller => "user", :action => "index" })
   get("/users/:username", { :controller => "user", :action => "profile" })
+  get("/users/:username/feed", { :controller => "user", :action => "profile_feed" })
 
 
   get("/photos", { :controller => "photo", :action => "index" })
   get("/photos/:photo_id", { :controller => "photo", :action => "photo_page" })
   post("/insert_like/:photo_id", { :controller => "photo", :action => "insert_like" })
   get("/delete_like/:photo_id", { :controller => "photo", :action => "delete_like" })
+  post("/insert_photo", { :controller => "photo", :action => "insert_photo" })
+
 
   post("/follow", { :controller => "user", :action => "follow" })
   post("/unfollow", { :controller => "user", :action => "unfollow" })

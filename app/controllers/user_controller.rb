@@ -27,4 +27,17 @@ class UserController < ApplicationController
   def unfollow
 
   end
+
+  def profile_feed
+    @current_user = User.where( { :id => session[:user_id]}).at(0)
+    @other_user = User.where( {:username => params.fetch("username")}).at(0)
+    @other_following = FollowRequest.where({ :sender_id => @other_user.id, :status => "accepted" })
+      
+
+    @other_following_ids = @other_following.map_relation_to_array(:recipient_id)
+    
+    @other_user_feed = Photo.where({ :owner_id => @other_following_ids}).order({ :created_at => :desc })
+
+    render("users/profile_feed.html.erb")
+  end
 end

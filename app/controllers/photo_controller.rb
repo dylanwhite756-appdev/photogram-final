@@ -50,4 +50,18 @@ class PhotoController < ApplicationController
 
       @new_comment.save
   end
+
+  def insert_photo
+    @new_photo = Photo.new
+    
+    @new_photo.caption = params.fetch("query_caption")
+    @new_photo.comments_count = 0
+    @new_photo.image = params.fetch("query_image")
+    @new_photo.likes_count = 0
+    @new_photo.owner_id = @current_user.id
+
+    @new_photo.save
+
+    redirect_to("/photos", { :notice => "Photo created successfully" })
+  end
 end

@@ -18,12 +18,13 @@
       </ul>
   <% end %>
   <% if @current_user.username != params.fetch("username") %>
-    <% if FollowRequest.where %>
-      <div>
-          <a href="/delete_follow_request/1854">
-            Unfollow
-          </a>
-       </div>
+    <% if FollowRequest.where({ :sender_id => @current_user.id, :recipient_id => User.where({ :username => params.fetch("username")}).at(0).id }).at(0) == nil %>
+      <form action="/follow" method="post">
+                  <input type="hidden" name="query_recipient_id" value="70">
+                  <button>
+                    Follow
+                  </button>
+                </form>
     <% else %>
       <div>
           <a href="/delete_follow_request/1854">

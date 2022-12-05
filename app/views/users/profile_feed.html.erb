@@ -1,0 +1,51 @@
+<h1><%= @current_user.username %> </h1>
+
+
+<h1>Feed </h1>
+<hr>
+  <div>
+    <div>
+      <table border="1">
+        <tr>
+          <th>Image</th>
+          <th>Owner</th>
+          <th>Caption</th>
+          <th>Posted</th>
+          <th>Likes</th>
+          <th></th>
+        </tr>
+
+        <% @other_user_feed.each do |a_photo| %>
+            <tr>
+                <td>
+                  <img src="<%= a_photo.image %>">
+                </td>
+
+                <td>
+                  <%= a_photo.owner_id %>
+                </td>
+              
+                <td>
+                <%= a_photo.caption %>
+                </td>
+              
+                <td>
+                  <%= distance_of_time_in_words(Time.now, a_photo.created_at) %> ago
+                </td>
+              
+                <td>
+                  <%= a_photo.likes_count %>
+                </td>
+              
+                <td>
+                  <a href="/photos/<%= a_photo.id %>">
+                    Show details
+                  </a>
+                </td>
+              </tr>
+            
+          <% end %>
+      </table>
+    </div>
+  </div>
+</hr> 
